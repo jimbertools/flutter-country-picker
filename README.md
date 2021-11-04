@@ -1,4 +1,5 @@
-# Country picker
+# Fork of Country picker
+## Added title in dialog for better visibiltiy
 
 [![pub package](https://img.shields.io/pub/v/country_picker.svg)](https://pub.dev/packages/country_picker)
 
