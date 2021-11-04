@@ -65,7 +65,6 @@ Widget _builder(
     height: height,
     decoration: BoxDecoration(
       color: _backgroundColor,
-      borderRadius: _borderRadius,
     ),
     child: CountryListView(
       onSelect: onSelect,

@@ -89,8 +89,7 @@ class _CountryListViewState extends State<CountryListView> {
 
     return Column(
       children: <Widget>[
-        const SizedBox(height: 12),
-        const Text('Please pick your country', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        const Text('From which country is the document you want to verify?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         const SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
