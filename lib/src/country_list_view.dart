@@ -92,8 +92,10 @@ class _CountryListViewState extends State<CountryListView> {
         const SizedBox(
           height: 12,
         ),
-        const Text(
-            "Since we want to verify your identity by your personal documents, it is necessary to know from which country the documents you want to verify are."),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          child: const Text(  "Since we want to verify your identity by your personal documents, it is necessary to know from which country the documents you want to verify are."),
+        ),
         const SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
