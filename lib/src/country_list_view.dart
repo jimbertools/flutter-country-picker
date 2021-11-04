@@ -39,8 +39,7 @@ class CountryListView extends StatefulWidget {
     this.showPhoneCode = false,
     this.countryListTheme,
     this.searchAutofocus = false,
-  })  : assert(exclude == null || countryFilter == null,
-            'Cannot provide both exclude and countryFilter'),
+  })  : assert(exclude == null || countryFilter == null, 'Cannot provide both exclude and countryFilter'),
         super(key: key);
 
   @override
@@ -52,13 +51,13 @@ class _CountryListViewState extends State<CountryListView> {
   late List<Country> _filteredList;
   late TextEditingController _searchController;
   late bool _searchAutofocus;
+
   @override
   void initState() {
     super.initState();
     _searchController = TextEditingController();
 
-    _countryList =
-        countryCodes.map((country) => Country.from(json: country)).toList();
+    _countryList = countryCodes.map((country) => Country.from(json: country)).toList();
 
     //Remove duplicates country if not use phone code
     if (!widget.showPhoneCode) {
@@ -67,12 +66,10 @@ class _CountryListViewState extends State<CountryListView> {
     }
 
     if (widget.exclude != null) {
-      _countryList.removeWhere(
-          (element) => widget.exclude!.contains(element.countryCode));
+      _countryList.removeWhere((element) => widget.exclude!.contains(element.countryCode));
     }
     if (widget.countryFilter != null) {
-      _countryList.removeWhere(
-          (element) => !widget.countryFilter!.contains(element.countryCode));
+      _countryList.removeWhere((element) => !widget.countryFilter!.contains(element.countryCode));
     }
 
     _filteredList = <Country>[];
@@ -83,13 +80,20 @@ class _CountryListViewState extends State<CountryListView> {
 
   @override
   Widget build(BuildContext context) {
-    final String searchLabel =
-        CountryLocalizations.of(context)?.countryName(countryCode: 'search') ??
-            'Search';
+    final String searchLabel = CountryLocalizations.of(context)?.countryName(countryCode: 'search') ?? 'Search';
 
     return Column(
       children: <Widget>[
-        const Text('From which country is the document you want to verify?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          child: const Text('From which country is the document you want to verify?',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        const Text(
+            "Since we want to verify your identity by your personal documents, it is necessary to know from which country the documents you want to verify are."),
         const SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -112,9 +116,7 @@ class _CountryListViewState extends State<CountryListView> {
         ),
         Expanded(
           child: ListView(
-            children: _filteredList
-                .map<Widget>((country) => _listRow(country))
-                .toList(),
+            children: _filteredList.map<Widget>((country) => _listRow(country)).toList(),
           ),
         ),
       ],
@@ -122,8 +124,7 @@ class _CountryListViewState extends State<CountryListView> {
   }
 
   Widget _listRow(Country country) {
-    final TextStyle _textStyle =
-        widget.countryListTheme?.textStyle ?? _defaultTextStyle;
+    final TextStyle _textStyle = widget.countryListTheme?.textStyle ?? _defaultTextStyle;
 
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
@@ -184,15 +185,12 @@ class _CountryListViewState extends State<CountryListView> {
 
   void _filterSearchResults(String query) {
     List<Country> _searchResult = <Country>[];
-    final CountryLocalizations? localizations =
-        CountryLocalizations.of(context);
+    final CountryLocalizations? localizations = CountryLocalizations.of(context);
 
     if (query.isEmpty) {
       _searchResult.addAll(_countryList);
     } else {
-      _searchResult = _countryList
-          .where((c) => c.startsWith(query, localizations))
-          .toList();
+      _searchResult = _countryList.where((c) => c.startsWith(query, localizations)).toList();
     }
 
     setState(() => _filteredList = _searchResult);
