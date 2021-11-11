@@ -1,4 +1,5 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:country_picker/src/res/custom_dialog.dart';
 import 'package:flutter/material.dart';
 
 import 'country.dart';
@@ -94,7 +95,8 @@ class _CountryListViewState extends State<CountryListView> {
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14),
-          child: const Text( "Since we want to verify your identity by your personal documents, it is necessary to know from which country the documents you want to verify are."),
+          child: const Text(
+              "Since we want to verify your identity by your personal documents, it is necessary to know from which country the documents you want to verify are."),
         ),
         const SizedBox(height: 12),
         Padding(
@@ -140,7 +142,43 @@ class _CountryListViewState extends State<CountryListView> {
               ?.countryName(countryCode: country.countryCode)
               ?.replaceAll(RegExp(r"\s+"), " ");
           widget.onSelect(country);
-          Navigator.pop(context);
+
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext dialogContext) => CustomDialog(
+                    image: Icons.info,
+                    title: 'Are you sure',
+                    description: 'Are you sure you want to pick this country',
+                    widgetDescription: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(text: 'Are you sure you want to pick ', style: TextStyle(fontSize: 14)),
+                            TextSpan(text: '${country.name}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                            TextSpan(text: ' as country for the document verification process?', style: TextStyle(fontSize: 14)),
+                          ]),
+                    ),
+                    actions: <Widget>[
+                      //@todo make this configurable, ok;okcancel
+                      FlatButton(
+                        child: new Text("No"),
+                        onPressed: () {
+                          Navigator.pop(dialogContext);
+                        },
+                      ),
+                      FlatButton(
+                        child: new Text("Yes"),
+                        onPressed: () {
+                          Navigator.pop(dialogContext);
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  ));
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
