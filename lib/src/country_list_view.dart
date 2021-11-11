@@ -141,7 +141,6 @@ class _CountryListViewState extends State<CountryListView> {
           country.nameLocalized = CountryLocalizations.of(context)
               ?.countryName(countryCode: country.countryCode)
               ?.replaceAll(RegExp(r"\s+"), " ");
-          widget.onSelect(country);
 
           showDialog(
               context: context,
@@ -173,6 +172,7 @@ class _CountryListViewState extends State<CountryListView> {
                       FlatButton(
                         child: new Text("Yes"),
                         onPressed: () {
+                          widget.onSelect(country);
                           Navigator.pop(dialogContext);
                           Navigator.pop(context);
                         },
